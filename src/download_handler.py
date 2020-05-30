@@ -29,13 +29,57 @@ def main():
 
 def arguments():
    parser = argparse.ArgumentParser()
-   parser.add_argument("--memories_path", help="path to memories_history.json")
-   parser.add_argument("--email", help="email to send downloads to")
+   parser.add_argument("--memories_path", required=True, type=str,
+                       help="Path to memories_history.json.")
+   parser.add_argument("--email", required=False, type=str, 
+                       help="Email to send downloads to.")
    return parser.parse_args()
 
-def write_file_binary(file_path, file_contents):
-    with open(file_path, 'wb') as f:
-        f.write(file_contents)
+def snapchat_downloader(memories_path, receiver_email):
+    # Path to extracted images, initialized in snapchat_downloader w/ user email
+    FILE_PATH = "downloads/"
+    # Path to all the zip files ready to send
+    ZIP_PATH = "zips/"
+    # Create unique directories indexed by email for downloads and zip files
+    FILE_PATH += "{}/".format(receiver_email)
+    ZIP_PATH += "{}/".format(receiver_email)
+
+    # Process the memories json file
+    process_json(memories_path, FILE_PATH)
+    # Zip directory of images
+    zip_handler(FILE_PATH, ZIP_PATH)
+    # Send the email with the downloads
+    send_email(receiver_email, ZIP_PATH + "snapchat_memories.zip")
+
+    # Delete all data from this session and reset global vars
+    reset(FILE_PATH, ZIP_PATH)
+    FILE_PATH = "downloads/"
+    ZIP_PATH = "zips/"
+
+def process_json(memories_path, FILE_PATH):
+    with open(memories_path) as fd:
+        data = json.load(fd)
+        saved_media = data["Saved Media"]
+
+        count = 0
+        size = len(saved_media)
+        print(size)
+
+        for memory in saved_media:
+            timestamp = memory["Date"]
+            year, month, day = timestamp[0:4], timestamp[5:7], timestamp[8:10]
+            date = "{}-{}-{}".format(year, month, day)
+            time = "{}-{}-{}".format(timestamp[11:13], timestamp[14:16], timestamp[17:19])
+
+            # Create nested file directory in FILE_PATH/year/month
+            media_path = FILE_PATH + year + "/" + month + "/"
+            Path(media_path).mkdir(parents=True, exist_ok=True)
+
+            # Increment file count for status
+            count += 1
+
+            # Download file
+            download_url(url = memory["Download Link"], file_path = media_path, type = memory["Media Type"], date = date, time = time)
 
 # Download the media file
 def download_url(url, file_path, type, date, time):
@@ -69,50 +113,6 @@ def download_url(url, file_path, type, date, time):
         print("Error downloading file: {}".format(file_name))
         # print(e)
 
-def check_duplicates():
-    pass
-
-def process_json(memories_path, FILE_PATH):
-    with open(memories_path) as fd:
-        data = json.load(fd)
-        saved_media = data["Saved Media"]
-
-        count = 0
-        size = len(saved_media)
-        print(size)
-
-        for memory in saved_media:
-            timestamp = memory["Date"]
-            year, month, day = timestamp[0:4], timestamp[5:7], timestamp[8:10]
-            date = "{}-{}-{}".format(year, month, day)
-            time = "{}-{}-{}".format(timestamp[11:13], timestamp[14:16], timestamp[17:19])
-
-            # Create nested file directory in FILE_PATH/year/month
-            media_path = FILE_PATH + year + "/" + month + "/"
-            Path(media_path).mkdir(parents=True, exist_ok=True)
-
-            # Increment file count for status
-            count += 1
-
-            # Download file
-            download_url(url = memory["Download Link"], file_path = media_path, type = memory["Media Type"], date = date, time = time)
-
-# TODO: delete in upload folder too
-def reset(FILE_PATH, ZIP_PATH):
-    # Delete zip file
-    try:
-        os.remove(ZIP_PATH + 'snapchat_memories.zip')
-    except Exception as e:
-        zip_name = 'snapchat_memories.zip'
-        print(f'Exception when attempting to delete "{ZIP_PATH + zip_name}": {str(e)}')
-
-    # Delete downloaded media files
-    try:
-        shutil.rmtree(FILE_PATH)
-        shutil.rmtree(ZIP_PATH)
-    except Exception as e:
-        print(f'Exception when attempting to delete a directory: {str(e)}')
-
 # Zip directory of images
 def zip_handler(FILE_PATH, ZIP_PATH):
     # Make a directory for this user's zip
@@ -130,29 +130,28 @@ def zip_handler(FILE_PATH, ZIP_PATH):
 
     ziph.close()
 
-def snapchat_downloader(memories_path, receiver_email):
-    # Path to extracted images, initialized in snapchat_downloader w/ user email
-    FILE_PATH = "downloads/"
-    # Path to all the zip files ready to send
-    ZIP_PATH = "zips/"
-    # Create unique directories indexed by email for downloads and zip files
-    FILE_PATH += "{}/".format(receiver_email)
-    ZIP_PATH += "{}/".format(receiver_email)
+def write_file_binary(file_path, file_contents):
+    with open(file_path, 'wb') as f:
+        f.write(file_contents)
 
-    # Process the memories json file
-    process_json(memories_path, FILE_PATH)
-    # Zip directory of images
-    zip_handler(FILE_PATH, ZIP_PATH)
-    # Send the email with the downloads
-    send_email(receiver_email, ZIP_PATH + "snapchat_memories.zip")
+def check_duplicates():
+    pass
 
-    # Delete all data from this session and reset global vars
-    reset(FILE_PATH, ZIP_PATH)
-    FILE_PATH = "downloads/"
-    ZIP_PATH = "zips/"
+# TODO: delete in upload folder too
+def reset(FILE_PATH, ZIP_PATH):
+    # Delete zip file
+    try:
+        os.remove(ZIP_PATH + 'snapchat_memories.zip')
+    except Exception as e:
+        zip_name = 'snapchat_memories.zip'
+        print(f'Exception when attempting to delete "{ZIP_PATH + zip_name}": {str(e)}')
+
+    # Delete downloaded media files
+    try:
+        shutil.rmtree(FILE_PATH)
+        shutil.rmtree(ZIP_PATH)
+    except Exception as e:
+        print(f'Exception when attempting to delete a directory: {str(e)}')
 
 if __name__=="__main__":
     main()
-    #memories_path = input("Input path to memories: ")
-    #receiver_email = input("Input receiver email: ")
-    #snapchat_downloader(memories_path, receiver_email)
