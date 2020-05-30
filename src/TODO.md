@@ -17,6 +17,8 @@
 [] Multi-threading for faster downloads?
 [] Storage! Anyway to store in user's browser/computer or create a file that initiates the download process? 
 [] Clean up directories
+[] Setup and launch on AWS EC2 instance
+[] Captcha?
  
 ## Error handling
 [] If the file uploaded is not correct i.e. memories_history.json

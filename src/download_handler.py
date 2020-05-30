@@ -57,6 +57,8 @@ def process_json(memories_path, FILE_PATH):
         for memory in saved_media:
             url = memory["Download Link"]
             count += 1
+            progress(count, len(saved_media), "Parsing Links")
+
             if url not in all_media["all_media"]:
                 tstamp = memory["Date"]
                 year, month, day = tstamp[0:4], tstamp[5:7], tstamp[8:10]
@@ -74,10 +76,7 @@ def process_json(memories_path, FILE_PATH):
                     date = date,
                     time = time,
                     status = Status.INIT
-                )
-
-                
-                progress(count, len(saved_media), "Fetching links")
+                ) 
 
         all_media["stats"]  = dict (
             total_files = len(saved_media),             # Total entries in .json 
@@ -91,10 +90,7 @@ def download_files():
     print(" ")
     for url in all_media["all_media"]:
         count += 1
-
         progress(count, all_media["stats"]["total_unique"], "Downloading")
-        # time.sleep(0.5)
-        # print("Downloading {}/{}".format(count, all_media["stats"]["total_unique"]), end = " ")
 
         media = all_media["all_media"][url]
         download_url(url = media["url"],
@@ -104,7 +100,7 @@ def download_files():
                      time = media["time"]
         )
 
-    print("\nDownload complete")
+    print("\nDownload complete!")
 
 
 # Download the media file
@@ -195,7 +191,7 @@ def progress(count, total, status=''):
 
     bar = '=' * filled_len + '-' * (bar_len - filled_len)
 
-    sys.stdout.write('[%s] %s ...%s\r' % (bar, str(count) + "/" + str(total), status))
+    sys.stdout.write(' %s \t [%s] %s\r' % (status.upper(), bar, str(count) + "/" + str(total)))
     sys.stdout.flush()
 
 # Download status for each file
