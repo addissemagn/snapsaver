@@ -30,13 +30,14 @@ import shutil
 # Path to uploaded json files
 UPLOADS_PATH = "uploads/"
 
+# 
 def write_file_binary(file_path, file_contents):
     with open(file_path, 'wb') as f:
         f.write(file_contents)
 
 # Download the media file
 def download_url(url, file_path, type, date, time):
-    # Name the file
+    # Name the file according to its type
     file_name = "Snapchat-{}__{}".format(date, time)
     if type == "PHOTO":
         file_name += ".jpg"
@@ -58,8 +59,6 @@ def download_url(url, file_path, type, date, time):
         req = urllib.request.Request(post_url, data=post_data, headers=headers)
         response = urllib.request.urlopen(req)
         download_url = response.read().decode()
-        # old_file_name = os.path.basename(urlparse(download_url).path)
-        # new_file_name = name
         response = urllib.request.urlopen(download_url)
         downloaded_contents = response.read()
 
@@ -67,10 +66,10 @@ def download_url(url, file_path, type, date, time):
 
         with open(file_path, 'wb') as f:
             f.write(downloaded_contents)
-
     except Exception as e:
         print(f'An exception occurred when attempting to download "{name}": {str(e)}')
 
+# If file already exists do not download TODO: maybe check if already exists in dictionary
 def check_duplicates():
     pass
 
