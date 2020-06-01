@@ -36,7 +36,7 @@ def snapchat_downloader(path, email, web = False):
     zip_handler(FILE_PATH, ZIP_PATH)    # Zip up directory of images
 
     # Only send email if email provided
-    if web == True:
+    if web:
         send_email(email, ZIP_PATH + "snapchat_memories.zip")   # Email zip of downloads
     
     reset(FILE_PATH, ZIP_PATH)                              # Delete data from session
