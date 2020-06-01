@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 from download_handler import snapchat_downloader
 import config
 
-ALLOWED_EXTENSIONS = set(['json'])
+ALLOWED_EXTENSIONS = set(['json'])  # file extensions allowed for uploaded file
 
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = config.UPLOADS_PATH

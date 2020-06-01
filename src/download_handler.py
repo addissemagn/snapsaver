@@ -100,7 +100,6 @@ def download_all():
 
     print("\nDownload complete!")
 
-
 # Download the media file
 def download_url(url, file_path, type, date, time):
     file_name = "Snapchat-{}__{}".format(date, time)
@@ -129,7 +128,7 @@ def download_url(url, file_path, type, date, time):
 
         with open(file_path, 'wb') as f:
             f.write(downloaded_contents)
-
+            
         all_media["all_media"][url]["status"] = Status.SUCCESS
         # print("- [SUCCESS] {}".format(file_name))
 
