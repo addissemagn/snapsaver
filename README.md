@@ -1,7 +1,7 @@
 <p align="center">
     <a href="">
         <!-- update logo -->
-        <img alt="snapsaver" src="/src/static/images/snap-orange-90.png" width ="144">
+        <img alt="snapsaver" src="/src/static/images/snap-orange-90.png" width ="100">
     </a>
 </p>
 
@@ -22,18 +22,17 @@ SnapSaver is simple mass downloader for all of your Snapchat memories. Download 
 
 ## Setting up locally 
 
-#### ***Clone the repo**
+##### Clone the repo
 ```
-$ git clone git@github.com:addissemagn/snapsaver.git
-$ cd snapsaver
+$ git clone git@github.com:addissemagn/snapsaver.git && cd snapsaver
 ```
 
-#### **Initialize a virtual environment**
+##### Initialize a virtual environment
 ```
 $ python3 -m venv venv
 ```
 
-#**### Install the dependencies**
+##### Install the dependencies
 ```
 $ source env/bin/activate 
 $ pip3 install -r requirements.txt
@@ -42,7 +41,7 @@ $ pip3 install -r requirements.txt
 ## Running the app
 ```
 $ source env/bin/activate
-$ python3 src/main.py # add the inputs
+$ python3 src/main.py --memories_path=memories_history.json # example path 
 ```
 
 ## Options
