@@ -13,8 +13,8 @@
     Download your Snapchat memories with ease.
 </p>
 
-<p align="center">
-
+<p align = "center">
+    <a href="http://makeapullrequest.com" target="_blank"><img alt="PR Badge" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
 ## What's SnapSaver?
