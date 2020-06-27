@@ -18,10 +18,23 @@
 </p>
 
 ## What's SnapSaver?
-SnapSaver is simple mass downloader for all of your Snapchat memories. Download from the site or have them emailed to you once the download is complete.
+SnapSaver is simple mass downloader for all of your Snapchat memories. Download from the site, have them emailed to you once the download is complete, or use the command line below.
 
 ## Setting up locally 
-You'll need python3 and pip3 installed.
+You'll need to have python3, pip3 and gcc installed. 
+
+Install instructions below for Centos machines. For Ubuntu, replace `yum` with `apt-get`.
+```sh
+# Update for latest packages
+sudo yum update 
+```
+
+```sh
+sudo yum install python3 -y
+sudo yum install python3-pip -y
+sudo yum install python3-devel -y
+sudo yum install gcc -y
+```
 
 ##### Clone the repo
 ```
@@ -33,7 +46,7 @@ $ git clone git@github.com:addissemagn/snapsaver.git && cd snapsaver
 $ python3 -m venv venv
 ```
 
-##### Install the dependencies
+##### Install project modules 
 ```
 $ source venv/bin/activate 
 $ pip3 install -r requirements.txt
@@ -42,7 +55,8 @@ $ pip3 install -r requirements.txt
 ## Running the app
 ```
 $ source env/bin/activate
-$ python3 src/main.py --memories_path=memories_history.json # example path 
+$ python3 src/main.py --memories_path=<path_to_memories_history_from_Snapchat>
+# Ex: python3 src/main.py --memories_path=memories_history.json
 ```
 
 ## Options
