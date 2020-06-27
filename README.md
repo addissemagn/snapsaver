@@ -21,6 +21,7 @@
 SnapSaver is simple mass downloader for all of your Snapchat memories. Download from the site or have them emailed to you once the download is complete.
 
 ## Setting up locally 
+You'll need python3 and pip3 installed.
 
 ##### Clone the repo
 ```
@@ -34,7 +35,7 @@ $ python3 -m venv venv
 
 ##### Install the dependencies
 ```
-$ source env/bin/activate 
+$ source venv/bin/activate 
 $ pip3 install -r requirements.txt
 ```
 
