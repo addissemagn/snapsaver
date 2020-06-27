@@ -53,6 +53,14 @@ $ pip3 install -r requirements.txt
 ```
 
 ## Running the app
+### Website
+```
+$ source venv/bin/activate
+$ python3 src/main.py
+```
+View the site at localhost:5000 🎉
+
+### Command line
 ```
 $ source venv/bin/activate
 $ python3 src/main.py --memories_path=<path_to_memories_history_from_Snapchat>
