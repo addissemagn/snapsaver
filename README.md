@@ -31,7 +31,8 @@ $ sudo yum install -y python3 python3-pip python3-devel gcc
 
 ##### Clone the repo
 ```
-$ git clone git@github.com:addissemagn/snapsaver.git && cd snapsaver
+$ git clone https://github.com/addissemagn/snapsaver.git
+$ cd snapsaver
 ```
 
 ##### Initialize a virtual environment
