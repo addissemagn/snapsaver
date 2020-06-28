@@ -25,15 +25,8 @@ You'll need to have python3, pip3 and gcc installed.
 
 Install instructions below for Centos machines. For Ubuntu, replace `yum` with `apt-get`.
 ```sh
-# Update for latest packages
-sudo yum update 
-```
-
-```sh
-sudo yum install python3 -y
-sudo yum install python3-pip -y
-sudo yum install python3-devel -y
-sudo yum install gcc -y
+$ sudo yum update # update for latest packages
+$ sudo yum install -y python3 python3-pip python3-devel gcc
 ```
 
 ##### Clone the repo
