@@ -69,3 +69,5 @@ $ python3 src/main.py --memories_path=<path_to_memories_history_from_Snapchat>
                 Optional: email to send zip file to
 --help          Show help message and exit
 ```
+
+![](/src/static/images/snapsaver.e8603fe%20(1).jpg)
